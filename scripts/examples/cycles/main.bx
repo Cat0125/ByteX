@@ -1,0 +1,18 @@
+USE @BUF
+
+SET 0 0 # counter
+GET @NUM m1 # target
+SET 2 1 # increase by 1
+
+SET 3 CYCLE:
+ADD 3 m0
+PRINT m3
+
+ADD 0 m2
+JUMP 7 if m0 < m1 # if counter < target
+
+SET 4 COUNTER/TARGET:
+ADD 4 m0
+ADD 4 /
+ADD 4 m1
+PRINT m4
