@@ -2,6 +2,23 @@
 
 ByteX is a simple programming language written in Python. You can use it as you wish - e.g. for education.
 
+# Installation
+
+## Manual
+
+1. Download and extract archive
+2. Open folder with ByteX and run in terminal:
+```
+python main.py
+```
+3. **Congratulations!**
+
+## Automatic
+
+_Soon..._
+
+> **Note**: make sure to install Python and add it to PATH
+
 # Documentation
 
 See [wiki](https://github.com/Cat0125/ByteX/wiki)
@@ -18,7 +35,7 @@ or find **actual** examples in [scripts/examples](https://github.com/Cat0125/Byt
 
 Simple calculator.
 
-```
+```bytex
 USE @BUF # Means that we're using buffer instead of memory
 
 PRINT Enter number:
@@ -53,10 +70,10 @@ Script folder must contain these files:
 - `launcher.bx`. This file is launches Python code.
 - `main.py`. This file is our main code.
 - `config.yml`. This is a config file.
-- `memory.dat`. This file will be automatically created after first script launch. It contains whole memory.
+- `memory.dat`. This file will be automatically created after first script launch. It contains whole memory. Just ignore it.
 
 config.yml:
-```
+```yaml
 requirements:
   sizes:
     mem: 0
@@ -76,7 +93,7 @@ permissions:
 ```
 
 launcher.bx:
-```
+```bytex
 TERMINAL python scripts/ScriptName/main.py
 ```
 
