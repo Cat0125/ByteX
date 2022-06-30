@@ -8,10 +8,11 @@ See [wiki](https://github.com/Cat0125/ByteX/wiki)
 
 # Examples
 
-More examples in **scripts/examples** folder.
+More examples in [scripts/examples](https://github.com/Cat0125/ByteX/tree/main/scripts/examples) folder.
 
 > **Note**: some examples can not work with updates.
-You can notify me [here](https://github.com/Cat0125/ByteX/issues) or find **actual** examples in scripts/examples folder.
+You can notify me [here](https://github.com/Cat0125/ByteX/issues)
+or find **actual** examples in [scripts/examples](https://github.com/Cat0125/ByteX/tree/main/scripts/examples) folder.
 
 ### Calculator
 
@@ -36,3 +37,41 @@ You can change operation at line 7 or create your own menu where user can select
 > **Note**: **Why we're using buffer instead of memory?**<br>
 Memory is a bigger storage that _always saves_ to file in script folder.
 Buffer is a smaller _temporary_ storage that _never be saved_.
+
+### Python
+
+This example can execute source Python code.
+The whole difficulty lies in fine-tuning the config.
+
+Script folder must contain these files:
+- `launcher.bx`. This file is launches Python code.
+- `main.py`. This file is our main code.
+- `config.yml`. This is a config file.
+- `memory.dat`. This file will be automatically created after first script launch. It contains whole memory.
+
+config.yml:
+```
+requirements:
+  sizes:
+    mem: 0
+    buf: 0
+    # We're don't need memory and buffer
+
+script:
+  entrance: "launcher.bx"
+  # Entrance point of our program.
+  # You can change it as you like.
+  # Default: "main.bx"
+
+permissions:
+  - terminal
+  # Permission to run terminal commands.
+  # We're using it to launch our code.
+```
+
+launcher.bx:
+```
+TERMINAL python scripts/ScriptName/main.py
+```
+
+And write your code in `main.py`!
