@@ -34,6 +34,12 @@ PRINT m2 # Print result
 ```
 You can change operation at line 7 or create your own menu where user can select operation!
 
+Supported operations:
++ ➕ `ADD` - addition
++ ➖ `SUB` - subtraction
++ ✖️ `MUP` - multiplication
++ ➗ `DIV` - division
+
 > **Note**: **Why we're using buffer instead of memory?**<br>
 Memory is a bigger storage that _always saves_ to file in script folder.
 Buffer is a smaller _temporary_ storage that _never be saved_.
