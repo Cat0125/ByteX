@@ -8,7 +8,7 @@ ByteX is a simple programming language written in Python. You can use it as you 
 
 ## Manual
 
-1. Download and extract archive
+1. Download and extract archive at releases
 2. Open folder with ByteX and run in terminal:
 ```
 cd path/to/bytex
@@ -18,7 +18,9 @@ python main.py
 
 ## Automatic
 
-_Soon..._
+1. Download `install.py` file at releases
+2. Run it
+3. **Complete!**
 
 # Documentation
 
