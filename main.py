@@ -1,8 +1,8 @@
 #pylint:disable=W0101
 #pylint:disable=W0621
 #pylint:disable=W0703
-import pickle, traceback, tempfile
-from termcolor import cprint
+import pickle, traceback, os
+from termcolor import cprint, colored
 from utils.configparser import parse as parseConfig
 from utils.path import path as mpath, ps
 
@@ -19,16 +19,17 @@ def error(msg = "", err = None, formatsize=0, color = 'red'):
 # BX Class
 class BX:
 	def __init__(self):
-		#[self.MEMSIZE, self.buffer] = [MEMSIZE, BUFSIZE]
 		self.memory = self.buffer = []
 	
-	def init_mem(self, size):
+	def init_mem(self, size, path):
 		self.p('Initializing memory...')
-		memFile = tempfile.TemporaryFile()#open('memory.dat', 'rb')
+		if not os.path.exists(path):
+			self.clearMem(path)
+		memFile = open(path, 'rb')
 		self.memory = []
 		memFile.flush()
 		self.p('Checking memory file...')
-		if 0 and True: #os.path.getsize('memory.dat') != 0: # if file contains anything
+		if os.path.getsize(path): # if file contains anything
 			self.p('Memory file not empty')
 			self.p('Reading memory from file...')
 			try:
@@ -45,39 +46,45 @@ class BX:
 				self.clearMem()
 				exit()
 		else: # if file empty (size=0)
-			self.p('Memory file empty')
-			self.p('Creating memory...')
+			#self.p('Memory file empty')
+			#self.p('Creating memory...')
 			self.memory = [0 for i in range(size)]
-			self.p('Saving memory in file...')
-			self.saveMem()
+			#self.p('Saving memory in file...')
+			self.saveMem(path)
 		self.p(f'Memory size: {len(self.memory)}')
 		memFile.close()
 		
 	def init_buffer(self, size):
-		self.p('Creating Buffer...')
+		#self.p('Creating Buffer...')
 		self.buffer = [0 for i in range(size)]
 		self.p(f'Buffer size: {len(self.buffer)}')
 	
-	def saveMem(self):
-		return
-		with open('memory.dat','wb') as f:
+	def saveMem(self, path):
+		with open(path,'wb') as f:
 			pickle.dump(self.memory, f)
 	
-	def clearMem(self):
-		return
-		open('memory.dat','w').close()
+	def clearMem(self, path):
+		open(path,'w').close()
 	
 	# Run Code
 	def run(self, path):
 		#configPath = filePath.split('/')
 		#configPath.pop()
 		#configPath = '/'.join(configPath)
-		configPath = path + ps + 'config.ini'
-		config = dict(parseConfig(configPath))
-		entrance = ps + config.get('Script', {}).get('entrance', 'main.bx')
+		configPath = path + ps + 'config.yml'
+		config = parseConfig(configPath)
+		perms = config.get('permissions', [])
+		if 'python' in perms or 'terminal' in perms:
+			cprint("************\n* WARNING! *\n************", 'yellow')
+			cprint(f'This program can execute {"Python" if "python" in perms else "Terminal"} code!','yellow')
+			ans = ''
+			while ans.lower() != 'y' and ans.lower() != 'n':
+				ans = input(colored('Continue? [Y/n] ','yellow'))
+			if ans.lower() == 'n': return
+		entrance = ps + config.get('script', {'entrance': 'main.bx'})['entrance']
 		filePath = path + entrance
-		self.init_mem(int(config['Requirements']['memsize']))
-		self.init_buffer(int(config['Requirements']['bufsize']))
+		self.init_mem(int(config['requirements']['sizes']['mem']), path+ps+'memory.dat')
+		self.init_buffer(int(config['requirements']['sizes']['buf']))
 		memory = self.memory
 		buffer = self.buffer
 		codeFile = open(filePath)
@@ -93,12 +100,7 @@ class BX:
 			self.p('\n[Code finished]')
 	
 	def p(self, *args):
-		if self.phook(*args):
-			print(*args)
-		
-	def phook(self, *args):
-		if args:
-			return True
+		print(*args)
 
 if __name__ == '__main__':
 	import sys
@@ -113,7 +115,7 @@ if __name__ == '__main__':
 			pre_location = mpath('scripts/examples/')
 			print('Select script:')
 			name = input(pre_location)
-			print(mpath(pre_location+name+'/<entrance point>'))
+			print(mpath(pre_location+name+ps+'<entrance point>'))
 			bx.run(pre_location+name)
 			#bx.saveMem()
 	interface()

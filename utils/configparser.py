@@ -1,6 +1,9 @@
-from configparser import ConfigParser
+import yaml
 
 def parse(path):
-	parser = ConfigParser()
-	parser.read(path)
-	return parser
+	with open(path) as file:
+		return yaml.safe_load(file)
+
+if __name__ == '__main__':
+	import pprint
+	pprint.pprint(parse('test.yml'))

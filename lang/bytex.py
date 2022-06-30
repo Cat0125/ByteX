@@ -1,11 +1,13 @@
 #pylint:disable=W0122
+import os
+
 def BX(code,mem,buf,config):
 	memory = mem
 	buffer = buf
 	m = memory
 	
-	def err(er, msg, line):
-		raise er(f'{msg} (at line {line})')
+	def err(er, msg, line='<Err>'):
+		raise er(f'{msg} (line {line})')
 	
 	def toArg(arg):
 		try:
@@ -90,12 +92,17 @@ def BX(code,mem,buf,config):
 		elif cmd == 'END':
 			break
 		elif cmd == 'PYTHON':
-			if int(config.get('Permissions',{}).get('python', 0)):
+			if 'python' in config.get('permissions',['-']):
 				exec(' '.join(args))
 			else:
-				err(PermissionError, 'Attempt to execute python without permission', i)
+				err(PermissionError, 'Attempt to execute Python without permission', i)
+		elif cmd == 'TERMINAL':
+			if 'terminal' in config.get('permissions',['-']):
+				os.system(' '.join(args))
+			else:
+				err(PermissionError, 'Attempt to execute shell without permission', i)
 		else:
-			raise SyntaxError(f'Invalid command: {cmd}')
+			err(SyntaxError, f'Invalid command: {cmd}', line)
 		i += 1
 	if len(m) == len(memory):
 		memory = m

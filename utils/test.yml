@@ -1,0 +1,10 @@
+dict:
+    number: 4
+    string1: test1
+    string2: 'test2'
+    string3: "test3"
+list:
+- item1
+- item2
+- item
+- item

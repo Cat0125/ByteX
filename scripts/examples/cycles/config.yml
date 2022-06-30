@@ -1,0 +1,4 @@
+requirements:
+  sizes:
+    mem: 0
+    buf: 8

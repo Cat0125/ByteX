@@ -1,0 +1,10 @@
+requirements:
+  sizes:
+    mem: 0
+    buf: 0
+
+script:
+  entrance: "launcher.bx"
+
+permissions:
+  - terminal
