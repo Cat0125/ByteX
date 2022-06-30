@@ -4,11 +4,14 @@ ByteX is a simple programming language written in Python. You can use it as you 
 
 # Installation
 
+> **Note**: make sure to install Python and add it to PATH
+
 ## Manual
 
 1. Download and extract archive
 2. Open folder with ByteX and run in terminal:
 ```
+cd path/to/bytex
 python main.py
 ```
 3. **Congratulations!**
@@ -16,8 +19,6 @@ python main.py
 ## Automatic
 
 _Soon..._
-
-> **Note**: make sure to install Python and add it to PATH
 
 # Documentation
 
